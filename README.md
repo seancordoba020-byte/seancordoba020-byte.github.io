@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Will You Be My Valentine?</title>
+  <title>buksan mo boss!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -158,7 +158,16 @@
         heart.remove();
       }, 6000);
     }, 300);
-  </script>
+  </script> 
+  <script>
+  document.body.addEventListener('click', function() {
+    var audio = document.getElementById('bgMusic');
+    if (audio.paused) {
+      audio.play();
+    }
+  });
+</script>
+
 
 </body>
 </html>
