@@ -3,61 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>carlita may tanong ako</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <title>Para sa'yo lang...</title>
+    <meta property="og:title" content="May tanong ako, Carlita...">
+    <meta property="og:description" content="Click mo 'to, may sasabihin ako sa'yo...">
+    <meta property="og:image" content="https://i.imgur.com/your-image-here.png"> <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        body { text-align: center; font-family: 'Arial', sans-serif; background-color: #ffe6e6; padding: 50px; }
-        .container { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: inline-block; }
-        h1 { color: #ff4d4d; }
-        .buttons { margin-top: 20px; }
-        button { font-size: 1.2rem; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; transition: 0.3s; }
-        #yesBtn { background-color: #ff4d4d; color: white; margin-right: 10px; }
-        #noBtn { background-color: #ccc; color: #333; position: absolute; }
+        body {
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Romantic gradient background */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Para hindi lumabas ang scrollbar sa confetti */
+            color: #fff; /* White text for contrast */
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.2); /* Semi-transparent white background for content */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 90%;
+            animation: fadeIn 2s ease-out; /* Simple fade-in animation */
+        }
+        h1 {
+            color: #ff4d4d; /* Reddish color for the question */
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: pulse 1.5s infinite alternate; /* Pulsing effect for the question */
+        }
+        .buttons {
+            margin-top: 30px;
+        }
+        button {
+            background-color: #ff4d4d; /* Red button */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: #e60000; /* Darker red on hover */
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+        .message {
+            font-size: 2rem;
+            color: #ff4d4d;
+            margin-top: 20px;
+            display: none; /* Hidden by default */
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
     </style>
 </head>
 <body>
+
+    <audio id="romanticSong" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
     <div class="container">
-        <h1>Will you be my Valentine? ❤️</h1>
+        <h1 id="question">Will you be my Valentine? ❤️</h1>
         <div class="buttons">
-            <button id="yesBtn" onclick="alert('Yay! See you! 😘')">Yes</button>
-            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+            <button id="yesBtn1" onclick="yesAction()">Yes</button>
+            <button id="yesBtn2" onclick="yesAction()">Yes</button>
         </div>
+        <p id="finalMessage" class="message">See you! 😘</p>
     </div>
 
     <script>
-        function moveButton() {
-            var x = Math.random() * (window.innerWidth - 100);
-            var y = Math.random() * (window.innerHeight - 100);
-            var btn = document.getElementById('noBtn');
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
+        // Play background music on first user interaction
+        document.body.addEventListener('click', function() {
+            var audio = document.getElementById('romanticSong');
+            if (audio.paused) {
+                audio.play();
+            }
+        }, { once: true });
+
+        function yesAction() {
+            // Stop background music (optional, or let it continue)
+            // document.getElementById('romanticSong').pause();
+
+            // Hide buttons and question
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('yesBtn1').style.display = 'none';
+            document.getElementById('yesBtn2').style.display = 'none';
+
+            // Show final message
+            document.getElementById('finalMessage').style.display = 'block';
+
+            // Trigger Confetti
+            confetti({
+                particleCount: 200, // More confetti!
+                spread: 120,
+                origin: { y: 0.6 }
+            });
+
+            // Trigger Heart Emojis (Custom Confetti)
+            const defaults = {
+                spread: 360,
+                ticks: 50,
+                gravity: 0,
+                decay: 0.94,
+                startVelocity: 30,
+                shapes: ['heart'],
+                colors: ['#bb0000', '#ffffff'] // Red and white hearts
+            };
+
+            function shoot() {
+                confetti({
+                    ...defaults,
+                    particleCount: 15,
+                    scalar: 2
+                });
+
+                confetti({
+                    ...defaults,
+                    particleCount: 10,
+                    scalar: 3
+                });
+            }
+
+            // Shoot hearts multiple times
+            setTimeout(shoot, 0);
+            setTimeout(shoot, 100);
+            setTimeout(shoot, 200);
         }
-        function yes() {
-    // Lalabas ang confetti
-    confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: { y: 0.6 }
-    });
-
-    // Lalabas ang message
-    alert('Yay! See you! 😘 ❤️');
-}
-
     </script>
-    <script>
-  document.body.addEventListener('click', function() {
-    var audio = document.getElementById('bgMusic');
-    if (audio.paused) {
-      audio.play();
-    }
-  }, { once: true });
-</script>
-    <audio id="bgMusic" loop>
-    <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-soft-piano-238.mp3" type="audio/mpeg">
-</audio>
-
-
 </body>
 </html>
+
