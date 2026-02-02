@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>carlita may tanong ako</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <style>
         body { text-align: center; font-family: 'Arial', sans-serif; background-color: #ffe6e6; padding: 50px; }
         .container { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: inline-block; }
@@ -31,6 +33,18 @@
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
+        function yes() {
+    // Lalabas ang confetti
+    confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
+
+    // Lalabas ang message
+    alert('Yay! See you! 😘 ❤️');
+}
+
     </script>
     <script>
   document.body.addEventListener('click', function() {
